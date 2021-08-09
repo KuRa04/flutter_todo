@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+Future<void> main() async {
+  // firebase初期化
+  await Firebase.initializeApp();
   runApp(MyTodoApp());
 }
 
@@ -8,16 +12,12 @@ class MyTodoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-
       debugShowCheckedModeBanner: false,
-
       title: 'My Todo App',
       theme: ThemeData(
-
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-
       home: TodoListPage(),
     );
   }
@@ -97,8 +97,12 @@ class _TodoAddPageState extends State<TodoAddPage> {
             Container(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   Navigator.of(context).pop(_text);
+                  await FirebaseFirestore.instance
+                      .collection('todos')
+                      .doc('id_abc') // ドキュメントID
+                      .set({'name': '鈴木', 'age': 40});
                 },
                 child: Text('リスト追加', style: TextStyle(color: Colors.white)),
               ),
