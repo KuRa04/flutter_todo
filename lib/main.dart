@@ -105,8 +105,7 @@ class _TodoAddPageState extends State<TodoAddPage> {
                   Navigator.of(context).pop(_text);
                   await FirebaseFirestore.instance
                       .collection('todos')
-                      .doc('id_abc') // ドキュメントID
-                      .set({'name': '鈴木', 'age': 60});
+                      .add({'todo': _text});
                 },
                 child: Text('リスト追加', style: TextStyle(color: Colors.white)),
               ),
