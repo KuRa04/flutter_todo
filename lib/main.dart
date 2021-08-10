@@ -89,12 +89,14 @@ class _MyAuthPageState extends State<MyAuthPage> {
                       email: newUserEmail,
                       password: newUserPassword,
                     );
-
                     // 登録したユーザー情報
                     final User user = result.user!;
                     setState(() {
                       infoText = "登録OK：${user.email}";
                     });
+                    await FirebaseFirestore.instance
+                        .collection('users')
+                        .add({'id': user.uid, 'email': user.email});
                   } catch (e) {
                     // 登録に失敗した場合
                     setState(() {
@@ -135,6 +137,10 @@ class _MyAuthPageState extends State<MyAuthPage> {
                     setState(() {
                       infoText = "ログインOK: ${user.email}";
                     });
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => TodoListPage()),
+                    );
                   } catch (e) {
                     setState(() {
                       infoText = "ログインNG: ${e.toString()}";
