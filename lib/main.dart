@@ -1,14 +1,18 @@
+import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   // firebase初期化
   await Firebase.initializeApp();
-  runApp(MyTodoApp());
+  runApp(const MyTodoApp());
 }
 
 class MyTodoApp extends StatelessWidget {
+  const MyTodoApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -102,7 +106,7 @@ class _TodoAddPageState extends State<TodoAddPage> {
                   await FirebaseFirestore.instance
                       .collection('todos')
                       .doc('id_abc') // ドキュメントID
-                      .set({'name': '鈴木', 'age': 40});
+                      .set({'name': '鈴木', 'age': 60});
                 },
                 child: Text('リスト追加', style: TextStyle(color: Colors.white)),
               ),
